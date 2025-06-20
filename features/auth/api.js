@@ -102,3 +102,16 @@ export const getNotifications = (params = {}) => {
 export const markNotificationAsRead = (notificationId) => {
   return axiosClient.patch(`/profile/notifications/${notificationId}/read`);
 };
+
+
+
+//Questionaire Api
+// Questionnaire API
+
+export const submitQuestionnaire = (data) => {
+  return axiosClient.post('/questionnaire/addQuestionnaire', data);
+};
+
+export const fetchQuestionnaire = () => {
+  return axiosClient.get('/questionnaire/getQuestionnaire');
+};

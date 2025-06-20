@@ -7,6 +7,9 @@ import { useAuthStatus } from '../features/auth/queries';
 import { useQuery } from '@tanstack/react-query';
 import { getUserData } from '../features/auth/api';
 import CreateProfileScreen from '../Screens/Profile/CreateProfileScreen';
+import { fetchQuestionnaire } from '../features/auth/api'
+import Questionnaire from '../Screens/Profile/Questionnaire';
+
 
 const RootStack = createNativeStackNavigator();
 
@@ -23,6 +26,20 @@ const RootNavigator = () => {
   enabled: !!isAuthenticated,
   retry: false,
   retryDelay: 1000, // wait 1 second before retrying
+});
+
+
+//Questionaire
+
+const {
+  data: questionnaire,
+  isLoading: questionnaireLoading,
+  isError: questionnaireError,
+} = useQuery({
+  queryKey: ['questionnaire'],
+  queryFn: fetchQuestionnaire,
+  enabled: isProfileValid, // only fetch if profile exists
+  retry: false,
 });
 
 
@@ -43,28 +60,38 @@ const RootNavigator = () => {
   // const isProfileValid = profile && Object.keys(profile).length > 0;
 const isProfileValid = profile !== null && profile !== undefined;
   let initialRoute = 'Auth';
-  if (isAuthenticated) {
-    initialRoute = isProfileValid ? 'Main' : 'CreateProfile';
+  
+ 
+
+if (isAuthenticated) {
+  if (!isProfileValid) {
+    initialRoute = 'CreateProfile';
+  } else if (!questionnaire || Object.keys(questionnaire).length === 0)
+ {
+    initialRoute = 'Questionnaire';
+  } else {
+    initialRoute = 'Main';
   }
+}
+
 
   return (
     // RootNavigator.js
+
 <RootStack.Navigator screenOptions={{ headerShown: false }}>
   {isAuthenticated ? (
-    isProfileValid ? (
-      <RootStack.Screen 
-        name="Main" 
-        component={MainTabNavigator} 
-        initialParams={{ profile }} // Pass data
-        
-      />
-    ) : (
+    !isProfileValid ? (
       <RootStack.Screen name="CreateProfile" component={CreateProfileScreen} />
+    ) : !questionnaire ? (
+      <RootStack.Screen name="Questionnaire" component={Questionnaire} />
+    ) : (
+      <RootStack.Screen name="Main" component={MainTabNavigator} />
     )
   ) : (
     <RootStack.Screen name="Auth" component={AuthStack} />
   )}
 </RootStack.Navigator>
+
   );
 };
 

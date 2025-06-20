@@ -84,7 +84,8 @@ const ProfileScreen = () => {
         {/* {renderMenuItem('people', 'My Family', '#000', 'MyFamily')} */}
         {renderMenuItem('people-circle', 'Family Members', '#000', 'FamilyMembers')}
         {renderMenuItem('notifications', 'Notifications', '#000', 'Notifications')}
-        {renderMenuItem('heart', 'Health Reports', '#000', 'HistoryScreen')}
+        {renderMenuItem('heart', 'Health Reports', '#000', 'QuestionnaireHistory')}
+
         {renderMenuItem('help-circle', 'Help Center', '#000', 'Help')}
         {renderMenuItem('settings', 'Account Settings', '#000', 'SettingsScreen')}
         {renderMenuItem('document-text', 'Terms & Privacy', '#000', 'Terms')}

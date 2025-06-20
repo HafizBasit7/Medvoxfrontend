@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getToken, removeTokens } from '../utils/auth';
 
 const axiosClient = axios.create({
-  baseURL: 'http://192.168.1.10:4000/api',
+  baseURL: 'http://192.168.100.30:4000/api',
+
 
   timeout: 15000,
 });

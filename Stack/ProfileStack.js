@@ -7,6 +7,8 @@ import MyFamily from '../Screens/Profile/MyFamily';
 import EditProfileScreen from '../Screens/Profile/EditProfileScreen';
 import FamilyMembers from '../Screens/Profile/FamilyMembers';
 import Notifications from '../Screens/Profile/Notification';
+import QuestionnaireHistory from '../Screens/Profile/QuestionnaireHistory';
+import UpdateQuestionnaire from '../Screens/Profile/UpdateQuestionnaire';
 
 const ProfileStackNavigator = createNativeStackNavigator();
 
@@ -78,6 +80,19 @@ export default function ProfileStack() {
           },
         }}
       />
+     
+<ProfileStackNavigator.Screen
+  name="QuestionnaireHistory"
+  component={QuestionnaireHistory}
+  options={{ title: 'Health Reports' }}
+/>
+
+<ProfileStackNavigator.Screen
+  name="UpdateQuestionnaire"
+  component={UpdateQuestionnaire}
+  options={{ headerShown: false }}
+/>
+
     </ProfileStackNavigator.Navigator>
   );
 }

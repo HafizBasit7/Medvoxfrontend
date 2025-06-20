@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-  const hiddenRoutes = ["MedicineAnalyzer", "VoiceChatScreen", "ReportAnalyzerScreen", "ChatBot", "EditProfile", "FamilyMembers", "Notifications"];
+  const hiddenRoutes = ["MedicineAnalyzer", "VoiceChatScreen", "ReportAnalyzerScreen", "ChatBot", "EditProfile", "FamilyMembers", "Notifications", "QuestionnaireHistory","UpdateQuestionnaire"];
   return !hiddenRoutes.includes(routeName);
 };
 

@@ -116,9 +116,9 @@ const FamilyMembers = () => {
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.detail}>Relation: {item.relation}</Text>
           <Text style={styles.detail}>Email: {item.memberEmail}</Text>
-          <Text style={styles.status}>
-            {item.registered ? 'Registered' : 'Invitation Sent'}
-          </Text>
+           <Text style={[styles.status, { color: item.status === 'active' ? '#4AD8B0' : 'red' }]}>
+  {item.status === 'active' ? 'Active' : 'Pending'}
+</Text>
         </View>
         <TouchableOpacity onPress={() => handleDelete(item._id)} style={styles.deleteButton}>
           <Icon name="trash" size={20} color="#F44336" />

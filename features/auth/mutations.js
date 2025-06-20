@@ -11,7 +11,8 @@ import {
   updateProfile,
   getFamilyMembers, addFamilyMember,  deleteFamilyMember,
   getNotifications, markNotificationAsRead,
- 
+  submitQuestionnaire, fetchQuestionnaire
+  
 } from './api';
 
 import { useMessage } from '../../context/MessageContext'; // ✅ Custom message hook
@@ -25,6 +26,7 @@ export const useLoginMutation = () => {
     onSuccess: async (data) => {
       await setTokens({ accessToken: data.accessToken });
       queryClient.setQueryData(['user'], data.user);
+      await queryClient.invalidateQueries({ queryKey: ['questionnaire'] });
       await queryClient.invalidateQueries({ queryKey: ['authStatus'] });
       await queryClient.refetchQueries({ queryKey: ['authStatus'] });
 
@@ -220,3 +222,35 @@ export const useMarkNotificationAsReadMutation = () => {
     },
   });
 };
+
+
+
+
+
+// Questionnaire Mutations
+
+export const useQuestionnaireSubmitMutation = () => {
+  const queryClient = useQueryClient();
+  const { showMessage } = useMessage();
+
+  return useMutation({
+    mutationFn: submitQuestionnaire,
+    onSuccess: async () => {
+      showMessage('success', 'Questionnaire submitted successfully');
+      await queryClient.invalidateQueries({ queryKey: ['questionnaire'] });
+    },
+    onError: (error) => {
+      showMessage('error', error?.response?.data?.message || 'Failed to submit questionnaire');
+    },
+  });
+};
+
+
+export const useQuestionnaireQuery = () => {
+  return useQuery({
+    queryKey: ['questionnaire'],
+    queryFn: fetchQuestionnaire,
+    retry: false,
+  });
+};
+
